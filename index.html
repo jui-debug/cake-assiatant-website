@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velvet & Whisk | Artisan Cake Design Assistant & Studio</title>
+  <meta name="description" content="Design your bespoke celebration cake with our interactive design assistant, smart recommendations, live 3D visualizer, and professional baker structural blueprints.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Cinematic Animated Studio Opening Overlay -->
+  <div id="studio-intro-curtain" class="studio-intro-curtain">
+    <div class="intro-curtain-half curtain-left"></div>
+    <div class="intro-curtain-half curtain-right"></div>
+    
+    <div class="intro-overlay-content">
+      <!-- Floating golden particle motes -->
+      <div class="intro-particles">
+        <span class="mote mote-1"></span>
+        <span class="mote mote-2"></span>
+        <span class="mote mote-3"></span>
+        <span class="mote mote-4"></span>
+        <span class="mote mote-5"></span>
+        <span class="mote mote-6"></span>
+      </div>
+
+      <!-- Animated Golden Logo Drawing SVG -->
+      <div class="intro-logo-pod">
+        <svg viewBox="0 0 160 160" class="intro-svg-drawing" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="introGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFF3B0" />
+              <stop offset="50%" stop-color="#D4AF37" />
+              <stop offset="100%" stop-color="#996515" />
+            </linearGradient>
+            <filter id="introGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          
+          <!-- Outer circle ornament -->
+          <circle cx="80" cy="80" r="74" class="draw-path circle-path" />
+          <circle cx="80" cy="80" r="68" class="draw-path circle-inner" />
+          
+          <!-- Pedestal -->
+          <rect x="36" y="132" width="88" height="6" rx="3" class="draw-path stand-path" />
+          <rect x="66" y="138" width="28" height="8" rx="2" class="draw-path stand-path" />
+          <rect x="52" y="146" width="56" height="5" rx="2" class="draw-path stand-path" />
+
+          <!-- Cake tiers drawing -->
+          <rect x="42" y="104" width="76" height="28" rx="5" class="draw-path tier-bottom-path" />
+          <rect x="54" y="78" width="52" height="26" rx="4" class="draw-path tier-mid-path" />
+          <rect x="66" y="54" width="28" height="24" rx="3" class="draw-path tier-top-path" />
+          
+          <!-- Crown & Heart Topper -->
+          <path d="M 80,48 C 74,40 73,32 80,24 C 87,32 86,40 80,48 Z" class="draw-path flame-path" filter="url(#introGlow)" />
+          
+          <!-- Sparkle star bursts -->
+          <path d="M 28 50 Q 34 50 34 44 Q 34 50 40 50 Q 34 50 34 56 Q 34 50 28 50 Z" class="draw-path star-path star-1" />
+          <path d="M 120 50 Q 126 50 126 44 Q 126 50 132 50 Q 126 50 126 56 Q 126 50 120 50 Z" class="draw-path star-path star-2" />
+        </svg>
+      </div>
+
+      <!-- Text Reveal -->
+      <div class="intro-text-block">
+        <span class="intro-eyebrow">HAUTE PÂTISSERIE ATELIER</span>
+        <h2 class="intro-title">VELVET &amp; WHISK</h2>
+        <p class="intro-tagline">Where Cake Architecture Meets Artisanal Craft</p>
+      </div>
+
+      <!-- Golden Progress Line -->
+      <div class="intro-progress-bar">
+        <div class="intro-progress-fill" id="intro-progress-fill"></div>
+      </div>
+
+      <!-- Interactive Skip / Enter Studio Button -->
+      <button type="button" class="intro-enter-btn" id="intro-skip-btn" onclick="CakeApp.dismissIntro()">
+        Enter Studio <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="studio-header">
+    <div class="header-container">
+      <div class="brand-badge">
+        <span class="brand-icon"><i class="fa-solid fa-cake-candles"></i></span>
+        <div class="brand-text">
+          <span class="brand-title">Velvet &amp; Whisk</span>
+          <span class="brand-subtitle">Artisan Cake Design Studio &amp; Assistant</span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button id="replay-intro-btn" class="btn btn-outline" title="Replay Animated Opening" onclick="CakeApp.replayIntro()">
+          <i class="fa-solid fa-play text-gold"></i> Replay Intro
+        </button>
+        <button id="quick-preset-btn" class="btn btn-outline" title="Load curated design examples">
+          <i class="fa-solid fa-sparkles"></i> Presets
+        </button>
+        <button id="share-design-btn" class="btn btn-gold">
+          <i class="fa-solid fa-share-nodes"></i> Share Link
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Grand Opening Hero Section -->
+  <section class="studio-hero-section" id="hero-welcome">
+    <div class="hero-backdrop-glow"></div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="hero-pill-badge"><i class="fa-solid fa-sparkles text-gold"></i> Haute Pâtisserie &amp; Atelier Consultation</span>
+          <span class="hero-pill-sub">Couture Cake Design Experience</span>
+        </div>
+        <h1 class="hero-title">
+          Bespoke Cake Architecture, <br>
+          <span class="hero-title-accent">Tailored to Perfection.</span>
+        </h1>
+        <p class="hero-description">
+          Welcome to the <strong>Velvet &amp; Whisk Design Studio</strong>. Seamlessly transform your celebration vision into an exquisite edible masterpiece. Calculate precise portion yields, customize icing textures with our live visualizer, inspect master baker structural blueprints, and export your official consultation brief.
+        </p>
+        
+        <div class="hero-cta-group">
+          <button type="button" class="btn btn-primary-gold btn-lg hero-cta-btn" onclick="CakeApp.startDesign()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Begin Design Questionnaire
+          </button>
+          <button type="button" class="btn btn-outline btn-lg" onclick="CakeApp.openModal('presets-modal')">
+            <i class="fa-solid fa-gem text-gold"></i> Inspiration Presets
+          </button>
+        </div>
+
+        <div class="hero-stats-bar">
+          <div class="hero-stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-desc">Custom Portions &amp; Tiers</span>
+          </div>
+          <div class="stat-separator"></div>
+          <div class="hero-stat-item">
+            <span class="stat-number">4-Layer</span>
+            <span class="stat-desc">Gourmet Sponge &amp; Compotes</span>
+          </div>
+          <div class="stat-separator"></div>
+          <div class="hero-stat-item">
+            <span class="stat-number">Master</span>
+            <span class="stat-desc">Internal Dowel Blueprints</span>
+          </div>
+          <div class="stat-separator"></div>
+          <div class="hero-stat-item">
+            <span class="stat-number">PDF &amp; Link</span>
+            <span class="stat-desc">Consultation Spec Export</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Card / Floating Showcase Graphic -->
+      <div class="hero-visual-showcase">
+        <div class="showcase-card-ambient">
+          <div class="showcase-glow-ring"></div>
+          
+          <div class="showcase-card-inner">
+            <div class="showcase-top-row">
+              <span class="showcase-badge"><i class="fa-solid fa-crown text-gold"></i> Signature Atelier Creation</span>
+              <span class="showcase-rating"><i class="fa-solid fa-star text-gold"></i> 4.99 &bull; Haute Level</span>
+            </div>
+
+            <div class="showcase-cake-graphic">
+              <!-- SVG Illustrated Cake Model -->
+              <svg viewBox="0 0 280 230" class="hero-cake-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="heroGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#D4AF37" />
+                    <stop offset="50%" stop-color="#FFF3B0" />
+                    <stop offset="100%" stop-color="#B8860B" />
+                  </linearGradient>
+                  <filter id="heroDropGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#C5A059" flood-opacity="0.3" />
+                  </filter>
+                </defs>
+                <!-- Stand Pedestal -->
+                <ellipse cx="140" cy="216" rx="90" ry="8" fill="rgba(0,0,0,0.12)" />
+                <rect x="70" y="204" width="140" height="8" rx="4" fill="url(#heroGoldGrad)" />
+                <rect x="122" y="210" width="36" height="12" fill="#B8860B" />
+                <path d="M 100 222 Q 140 220 180 222 L 186 226 L 94 226 Z" fill="url(#heroGoldGrad)" />
+
+                <!-- Bottom Tier 8" -->
+                <rect x="58" y="148" width="164" height="56" rx="8" fill="#FFFDF7" stroke="#EAE4DC" stroke-width="1.2" />
+                <rect x="64" y="152" width="36" height="48" rx="4" fill="rgba(255,255,255,0.7)" />
+                <!-- Gold Flakes on Tier 1 -->
+                <polygon points="80,165 88,168 85,175 78,172" fill="#D4AF37" />
+                <polygon points="175,170 184,173 180,180 173,176" fill="#D4AF37" />
+                <polygon points="120,182 128,185 124,192 118,188" fill="#D4AF37" />
+
+                <!-- Mid Tier 6" -->
+                <rect x="85" y="98" width="110" height="50" rx="7" fill="#FCEEE9" stroke="#EAE4DC" stroke-width="1.2" />
+                <rect x="90" y="102" width="24" height="42" rx="4" fill="rgba(255,255,255,0.7)" />
+                <!-- Gold Flakes on Tier 2 -->
+                <polygon points="140,115 147,118 144,124 138,121" fill="#D4AF37" />
+                <polygon points="160,130 167,133 164,139 158,136" fill="#D4AF37" />
+
+                <!-- Top Tier 4" -->
+                <rect x="108" y="56" width="64" height="42" rx="6" fill="#FFFDF7" stroke="#EAE4DC" stroke-width="1.2" />
+                <rect x="112" y="59" width="14" height="36" rx="3" fill="rgba(255,255,255,0.7)" />
+
+                <!-- Sugar Botanical Cascade -->
+                <g transform="translate(162, 70)">
+                  <circle cx="0" cy="0" r="11" fill="#F8BBD0" filter="url(#heroDropGlow)" />
+                  <circle cx="-4" cy="-4" r="8" fill="#F48FB1" />
+                  <circle cx="4" cy="4" r="7" fill="#F06292" />
+                  <circle cx="0" cy="0" r="4" fill="#FFFDE7" />
+                  <path d="M 6,-8 C 16,-20 28,-12 20,4 Z" fill="#7CB342" />
+                </g>
+                <g transform="translate(186, 126)">
+                  <circle cx="0" cy="0" r="13" fill="#F8BBD0" filter="url(#heroDropGlow)" />
+                  <circle cx="-5" cy="-5" r="9" fill="#F48FB1" />
+                  <circle cx="5" cy="5" r="8" fill="#F06292" />
+                  <circle cx="0" cy="0" r="4.5" fill="#FFFDE7" />
+                  <path d="M 8,-10 C 20,-24 34,-14 24,6 Z" fill="#689F38" />
+                </g>
+
+                <!-- Monogram Acrylic Topper -->
+                <g transform="translate(140, 52)">
+                  <line x1="0" y1="0" x2="0" y2="12" stroke="#D4AF37" stroke-width="2" />
+                  <circle cx="0" cy="-20" r="20" fill="none" stroke="#D4AF37" stroke-width="1.8" />
+                  <text x="0" y="-16" text-anchor="middle" font-family="'Playfair Display', serif" font-size="11" font-weight="bold" fill="#B8860B" font-style="italic">V&amp;W</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="showcase-footer-row">
+              <div>
+                <span class="showcase-label">Featured Creation</span>
+                <strong class="showcase-val">The Royal Windsor Botanical</strong>
+              </div>
+              <div class="showcase-tag-pill">3 Tiers &bull; 90 Guests</div>
+            </div>
+          </div>
+
+          <!-- Floating Interactive Badges -->
+          <div class="floating-badge badge-top-left">
+            <i class="fa-solid fa-palette text-gold"></i>
+            <div>
+              <strong>Live Customizer</strong>
+              <span>7 Finishes &amp; Textures</span>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-bottom-right">
+            <i class="fa-solid fa-shield-halved text-gold"></i>
+            <div>
+              <strong>Certified Stability</strong>
+              <span>Doweling &amp; Temp Safety</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow Stepper Bar -->
+  <nav class="flow-stepper-wrapper" aria-label="Design Progress Flow">
+    <div class="flow-stepper">
+      <div class="step-item active" data-step="1" id="step-nav-1">
+        <div class="step-indicator">
+          <span class="step-num">1</span>
+          <i class="fa-solid fa-check step-check"></i>
+        </div>
+        <div class="step-meta">
+          <span class="step-label">Stage 1</span>
+          <span class="step-name">Discovery Questionnaire</span>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item" data-step="2" id="step-nav-2">
+        <div class="step-indicator">
+          <span class="step-num">2</span>
+          <i class="fa-solid fa-check step-check"></i>
+        </div>
+        <div class="step-meta">
+          <span class="step-label">Stage 2</span>
+          <span class="step-name">Recommendations &amp; Visualizer</span>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item" data-step="3" id="step-nav-3">
+        <div class="step-indicator">
+          <span class="step-num">3</span>
+          <i class="fa-solid fa-check step-check"></i>
+        </div>
+        <div class="step-meta">
+          <span class="step-label">Stage 3</span>
+          <span class="step-name">Baker's Technical Specs</span>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item" data-step="4" id="step-nav-4">
+        <div class="step-indicator">
+          <span class="step-num">4</span>
+          <i class="fa-solid fa-check step-check"></i>
+        </div>
+        <div class="step-meta">
+          <span class="step-label">Stage 4</span>
+          <span class="step-name">Important Considerations</span>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item" data-step="5" id="step-nav-5">
+        <div class="step-indicator">
+          <span class="step-num">5</span>
+          <i class="fa-solid fa-check step-check"></i>
+        </div>
+        <div class="step-meta">
+          <span class="step-label">Stage 5</span>
+          <span class="step-name">Consultation Blueprint</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-content-area">
+    
+    <!-- STAGE 1: QUESTIONNAIRE -->
+    <section id="stage-1" class="stage-section active">
+      <div class="section-intro">
+        <span class="badge-pill">Step 1 of 5 &bull; Event &amp; Vision Discovery</span>
+        <h1 class="section-title">Design Questionnaire</h1>
+        <p class="section-desc">Answer a few tailored questions about your celebration. Our intelligent engine matches your guest volume, aesthetic, flavor notes, and dietary needs with master baker calculations.</p>
+      </div>
+
+      <form id="questionnaire-form" class="quiz-container" onsubmit="return false;">
+        <!-- Q1: Occasion -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">1</span>
+            <div class="card-titles">
+              <label class="quiz-question-title">What celebration is this masterpiece for?</label>
+              <span class="quiz-question-sub">Select the core occasion to adapt formal tiers, height ratios, and ornamentation.</span>
+            </div>
+          </div>
+          <div class="option-grid grid-3" id="occasion-options">
+            <label class="option-card">
+              <input type="radio" name="occasion" value="wedding" checked>
+              <div class="card-content">
+                <i class="fa-solid fa-rings-wedding option-icon"></i>
+                <span class="option-title">Wedding &amp; Elopement</span>
+                <span class="option-sub">Classic tiering, formal elegance, ceremonial presence</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="occasion" value="birthday">
+              <div class="card-content">
+                <i class="fa-solid fa-gift option-icon"></i>
+                <span class="option-title">Milestone Birthday</span>
+                <span class="option-sub">Vibrant statement, personalized toppers, bold styling</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="occasion" value="shower">
+              <div class="card-content">
+                <i class="fa-solid fa-baby-carriage option-icon"></i>
+                <span class="option-title">Baby / Bridal Shower</span>
+                <span class="option-sub">Soft pastel hues, delicate florals, whimsical touch</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="occasion" value="anniversary">
+              <div class="card-content">
+                <i class="fa-solid fa-champagne-glasses option-icon"></i>
+                <span class="option-title">Anniversary Celebration</span>
+                <span class="option-sub">Timeless luxury, gold accents, refined romanticism</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="occasion" value="gala">
+              <div class="card-content">
+                <i class="fa-solid fa-building-columns option-icon"></i>
+                <span class="option-title">Corporate Gala &amp; Launch</span>
+                <span class="option-sub">Modern architectural lines, branding accents, clean cuts</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="occasion" value="intimate">
+              <div class="card-content">
+                <i class="fa-solid fa-heart option-icon"></i>
+                <span class="option-title">Intimate Gathering / Dinner</span>
+                <span class="option-sub">Boutique single/double tier, artisanal focus</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2: Guest Count & Tiers Slider -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">2</span>
+            <div class="card-titles">
+              <label class="quiz-question-title" for="guest-slider">Expected Guest Count &amp; Recommended Tiering</label>
+              <span class="quiz-question-sub">Slide to adjust attendees. Tiers and portion estimates recalculate in real-time.</span>
+            </div>
+          </div>
+          <div class="slider-interactive-box">
+            <div class="slider-top-metrics">
+              <div class="metric-block">
+                <span class="metric-label">Estimated Guests</span>
+                <span class="metric-value-lg" id="guest-count-display">65 Guests</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric-block">
+                <span class="metric-label">Recommended Tiers</span>
+                <span class="metric-value-lg highlight-gold" id="recommended-tiers-display">2 Tiers (8" + 6")</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric-block">
+                <span class="metric-label">Catering Portions</span>
+                <span class="metric-value-lg" id="portions-count-display">~65-72 Servings</span>
+              </div>
+            </div>
+            
+            <div class="range-slider-container">
+              <input type="range" min="10" max="220" value="65" step="5" class="custom-range" id="guest-slider">
+              <div class="slider-ticks">
+                <span>10 (1-Tier)</span>
+                <span>40 (2-Tier)</span>
+                <span>80 (3-Tier)</span>
+                <span>140+ (4-Tier)</span>
+                <span>200+ (Grand)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3: Aesthetic Theme -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">3</span>
+            <div class="card-titles">
+              <label class="quiz-question-title">Aesthetic Style &amp; Texture</label>
+              <span class="quiz-question-sub">Define the external artistry and structural finish.</span>
+            </div>
+          </div>
+          <div class="option-grid grid-3" id="aesthetic-options">
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="botanical" checked>
+              <div class="card-content">
+                <div class="aesthetic-preview-tag botanical-tag"><i class="fa-solid fa-seedling"></i> Organic Luxury</div>
+                <span class="option-title">Botanical &amp; Fresh Flora</span>
+                <span class="option-sub">Cascading sugar flowers, pressed edible blossoms, garden eucalyptus</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="lambeth">
+              <div class="card-content">
+                <div class="aesthetic-preview-tag lambeth-tag"><i class="fa-solid fa-crown"></i> Victorian Heritage</div>
+                <span class="option-title">Vintage Lambeth Piping</span>
+                <span class="option-sub">Intricate royal over-piping, shell borders, scrollwork &amp; maraschino cherries</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="geometric">
+              <div class="card-content">
+                <div class="aesthetic-preview-tag modern-tag"><i class="fa-solid fa-shapes"></i> Haute Couture</div>
+                <span class="option-title">Modern Marble &amp; Geometric</span>
+                <span class="option-sub">Sharp square/round tiers, wafer paper sails, stone marbling</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="textured">
+              <div class="card-content">
+                <div class="aesthetic-preview-tag texture-tag"><i class="fa-solid fa-palette"></i> Impressionist</div>
+                <span class="option-title">Textured Palette Knife</span>
+                <span class="option-sub">Sculpted buttercream ridges, painterly strokes, organic deckled rims</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="metallic">
+              <div class="card-content">
+                <div class="aesthetic-preview-tag gold-tag"><i class="fa-solid fa-coins"></i> Opulent</div>
+                <span class="option-title">24K Gold Leaf &amp; Metallic</span>
+                <span class="option-sub">Torn gold leaf foil, champagne luster dust, gilded tier edges</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="aesthetic" value="rustic">
+              <div class="card-content">
+                <div class="aesthetic-preview-tag rustic-tag"><i class="fa-solid fa-wheat-awn"></i> Earthy</div>
+                <span class="option-title">Semi-Naked &amp; Rustic Woods</span>
+                <span class="option-sub">Subtle sponge peeking through crumb coat, fresh figs &amp; rosemary sprigs</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4: Flavor Palette & Fillings -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">4</span>
+            <div class="card-titles">
+              <label class="quiz-question-title">Signature Flavor &amp; Filling Pairing</label>
+              <span class="quiz-question-sub">Carefully curated combinations developed for structural integrity and sensory balance.</span>
+            </div>
+          </div>
+          <div class="flavor-selector-grid" id="flavor-options">
+            <label class="flavor-card">
+              <input type="radio" name="flavor" value="vanilla-berry" checked>
+              <div class="flavor-content">
+                <div class="flavor-badge">Most Loved Wedding</div>
+                <span class="flavor-name">Tahitian Vanilla Bean &amp; Wild Berry Champagne</span>
+                <p class="flavor-desc">Velvety Madagascar vanilla sponge, house-reduced strawberry-prosecco compote, whipped Swiss meringue buttercream.</p>
+                <div class="flavor-stats">
+                  <span>Sweetness: 3.5/5</span> &bull; <span>Moisture: 4.8/5</span> &bull; <span>Light Crumb</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="flavor-card">
+              <input type="radio" name="flavor" value="chocolate-caramel">
+              <div class="flavor-content">
+                <div class="flavor-badge gold">Indulgent Decadence</div>
+                <span class="flavor-name">Belgian Dark Chocolate Ganache &amp; Salted Caramel</span>
+                <p class="flavor-desc">70% Callebaut dark chocolate mud cake, Fleur de Sel smoked caramel, espresso-infused silky ganache.</p>
+                <div class="flavor-stats">
+                  <span>Sweetness: 4.0/5</span> &bull; <span>Moisture: 5.0/5</span> &bull; <span>Dense Structural</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="flavor-card">
+              <input type="radio" name="flavor" value="earl-grey-lemon">
+              <div class="flavor-content">
+                <div class="flavor-badge purple">Artisanal Botanical</div>
+                <span class="flavor-name">Earl Grey Lavender &amp; Meyer Lemon Curd</span>
+                <p class="flavor-desc">Bergamot tea-steeped sponge, tart Meyer lemon curd core, lavender French buttercream layer.</p>
+                <div class="flavor-stats">
+                  <span>Sweetness: 3.0/5</span> &bull; <span>Moisture: 4.5/5</span> &bull; <span>Citrus Aromatic</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="flavor-card">
+              <input type="radio" name="flavor" value="pistachio-rose">
+              <div class="flavor-content">
+                <div class="flavor-badge green">Middle Eastern Allure</div>
+                <span class="flavor-name">Roasted Pistachio Cardamom &amp; Rosewater Velvet</span>
+                <p class="flavor-desc">Crushed Sicilian pistachio sponge scented with green cardamom, raspberry rose coulis, mascarpone mousse.</p>
+                <div class="flavor-stats">
+                  <span>Sweetness: 3.2/5</span> &bull; <span>Moisture: 4.7/5</span> &bull; <span>Nutty &amp; Floral</span>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5: Dietary Preferences & Allergies -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">5</span>
+            <div class="card-titles">
+              <label class="quiz-question-title">Dietary Requirements &amp; Allergen Isolation</label>
+              <span class="quiz-question-sub">Check any protocols needed. Formulations will automatically adjust safety baking advice.</span>
+            </div>
+          </div>
+          <div class="dietary-tags-container">
+            <label class="dietary-checkbox-label">
+              <input type="checkbox" name="dietary" value="gluten-free">
+              <span class="checkbox-chip"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Gluten-Free Option</span>
+            </label>
+            <label class="dietary-checkbox-label">
+              <input type="checkbox" name="dietary" value="nut-free">
+              <span class="checkbox-chip"><i class="fa-solid fa-shield-halved"></i> 100% Nut-Free Kitchen Protocol</span>
+            </label>
+            <label class="dietary-checkbox-label">
+              <input type="checkbox" name="dietary" value="dairy-free">
+              <span class="checkbox-chip"><i class="fa-solid fa-cow"></i> Vegan / Dairy-Free Formulation</span>
+            </label>
+            <label class="dietary-checkbox-label">
+              <input type="checkbox" name="dietary" value="eggless">
+              <span class="checkbox-chip"><i class="fa-solid fa-egg"></i> Pure Eggless Sponge</span>
+            </label>
+            <label class="dietary-checkbox-label">
+              <input type="checkbox" name="dietary" value="halal">
+              <span class="checkbox-chip"><i class="fa-solid fa-star-and-crescent"></i> Halal Certified (Zero Gelatin / Alcohol)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6: Budget Tier & Timeline -->
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <span class="card-step-badge">6</span>
+            <div class="card-titles">
+              <label class="quiz-question-title">Budget Tier &amp; Booking Timeline</label>
+              <span class="quiz-question-sub">Helps balance hand-sculpted elements with foundational artistry.</span>
+            </div>
+          </div>
+          <div class="option-grid grid-3">
+            <label class="option-card">
+              <input type="radio" name="budget" value="classic" checked>
+              <div class="card-content">
+                <span class="budget-price-tag">$280 - $480</span>
+                <span class="option-title">Signature Studio</span>
+                <span class="option-sub">Classic piping, smooth buttercream, seasonal fresh blooms</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="budget" value="artisan">
+              <div class="card-content">
+                <span class="budget-price-tag">$490 - $850</span>
+                <span class="option-title">Artisan Couture</span>
+                <span class="option-sub">Handcrafted wafer florals, gold leaf, custom tier textures</span>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="budget" value="masterpiece">
+              <div class="card-content">
+                <span class="budget-price-tag">$900+</span>
+                <span class="option-title">Haute Masterpiece</span>
+                <span class="option-sub">Multi-tier monumental cake, bespoke sugar art, white-glove setup</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="stage-nav-bar">
+          <div class="nav-left-info">
+            <i class="fa-solid fa-circle-info"></i> All selections can be fine-tuned in the live visualizer.
+          </div>
+          <button type="button" id="generate-recommendations-btn" class="btn btn-primary-gold btn-lg">
+            Generate Recommendations &amp; Live Model <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+
+
+    <!-- STAGE 2: RECOMMENDATIONS & LIVE VISUALIZER -->
+    <section id="stage-2" class="stage-section">
+      <div class="section-intro">
+        <span class="badge-pill">Step 2 of 5 &bull; AI Recommendation &amp; Visual Studio</span>
+        <h2 class="section-title">Your Tailored Cake Recommendation</h2>
+        <p class="section-desc">Based on your questionnaire, we've synthesized an optimal centerpiece design. Adjust the interactive controls below to modify icing colors, tiers, and toppers in real-time.</p>
+      </div>
+
+      <!-- Recommendation Hero Cards -->
+      <div class="recommendations-banner">
+        <div class="rec-match-pill">
+          <i class="fa-solid fa-award"></i> <span id="match-percent">98% Match</span> for your event
+        </div>
+        <div class="rec-header-row">
+          <div>
+            <h3 class="rec-headline" id="rec-cake-title">The Royal Botanical Blossom</h3>
+            <p class="rec-subhead" id="rec-cake-subhead">A majestic 2-tier architectural centerpiece featuring organic pressed florals, Swiss vanilla bean buttercream, and champagne berry compote.</p>
+          </div>
+          <div class="rec-price-box">
+            <span class="price-label">Estimated Investment</span>
+            <span class="price-amount" id="dynamic-price-estimate">$425 - $480</span>
+            <span class="price-notes">Includes dowel support &amp; packaging</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split Studio: Left = Interactive Visualizer | Right = Live Customizer Controls -->
+      <div class="studio-workspace-grid">
+        <!-- Visualizer Canvas Container -->
+        <div class="visualizer-stage-card">
+          <div class="visualizer-header">
+            <div class="badge-live"><span class="pulse-dot"></span> LIVE 2D/3D VISUALIZER</div>
+            <div class="visualizer-tools">
+              <button class="tool-btn" id="toggle-cut-view-btn" title="Toggle Cut & Layer Inspection View">
+                <i class="fa-solid fa-layer-group"></i> Interior Sponge View
+              </button>
+              <button class="tool-btn" id="reset-view-btn" title="Reset Visualizer">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic SVG/Canvas Cake Display Area -->
+          <div class="cake-display-pod" id="cake-pod">
+            <!-- Dynamic Cake SVG rendered by JS -->
+            <div id="cake-svg-container" class="cake-svg-container">
+              <!-- SVG inserted dynamically -->
+            </div>
+            
+            <!-- Pedestal / Stand Base -->
+            <div class="cake-stand-pedestal">
+              <div class="stand-plate"></div>
+              <div class="stand-pillar"></div>
+              <div class="stand-foot"></div>
+            </div>
+
+            <div class="scale-ruler-indicator" id="scale-indicator">
+              <span class="ruler-line"></span>
+              <span class="ruler-label" id="ruler-height-label">Total Height: ~14 inches</span>
+            </div>
+          </div>
+
+          <!-- Live Cake Specification Bar Below Preview -->
+          <div class="cake-spec-summary-bar">
+            <div class="spec-cell">
+              <span class="spec-t">Total Tiers</span>
+              <span class="spec-v" id="spec-tiers-val">2 Tiers</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-t">Cake Base</span>
+              <span class="spec-v" id="spec-base-val">8" Round (4-Layer)</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-t">Top Tier</span>
+              <span class="spec-v" id="spec-top-val">6" Round (4-Layer)</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-t">Total Portions</span>
+              <span class="spec-v" id="spec-portions-val">65 Servings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customizer Controls Panel -->
+        <div class="customizer-panel-card">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-sliders"></i> Interactive Customizer</h3>
+            <span class="subtext">Fine-tune aesthetics to match your exact moodboard</span>
+          </div>
+
+          <div class="control-groups-accordion">
+            <!-- 1. Tier Architecture -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>Tier Stacking Architecture</span>
+                <span class="control-hint" id="tier-hint">Adjust tiers on demand</span>
+              </label>
+              <div class="tier-pill-selector">
+                <button class="tier-btn" data-tiers="1">1 Tier (Intimate)</button>
+                <button class="tier-btn active" data-tiers="2">2 Tiers (Signature)</button>
+                <button class="tier-btn" data-tiers="3">3 Tiers (Grand)</button>
+                <button class="tier-btn" data-tiers="4">4 Tiers (Royal)</button>
+              </div>
+            </div>
+
+            <!-- 2. Icing & Palette Selection -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>Exterior Icing Shade</span>
+                <span class="control-hint" id="color-name-label">Warm Vanilla Ivory</span>
+              </label>
+              <div class="color-swatches-row" id="color-swatches">
+                <button class="swatch-btn active" data-color="#FFFDF7" data-name="Warm Vanilla Ivory" style="background: #FFFDF7;" title="Warm Vanilla Ivory"></button>
+                <button class="swatch-btn" data-color="#FCEEE9" data-name="Blush Champagne Rose" style="background: #FCEEE9;" title="Blush Champagne Rose"></button>
+                <button class="swatch-btn" data-color="#E8EFE9" data-name="Earthy Sage Cream" style="background: #E8EFE9;" title="Earthy Sage Cream"></button>
+                <button class="swatch-btn" data-color="#F4ECE1" data-name="Tuscan Alabaster" style="background: #F4ECE1;" title="Tuscan Alabaster"></button>
+                <button class="swatch-btn" data-color="#E2D4C9" data-name="Café Au Lait" style="background: #E2D4C9;" title="Café Au Lait"></button>
+                <button class="swatch-btn" data-color="#1F2A38" data-name="Midnight Royal Navy" style="background: #1F2A38;" title="Midnight Royal Navy"></button>
+                <button class="swatch-btn" data-color="#3A2823" data-name="Rich Ganache Noir" style="background: #3A2823;" title="Rich Ganache Noir"></button>
+              </div>
+            </div>
+
+            <!-- 3. Icing Texture / Technique -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>Icing Surface Finish</span>
+              </label>
+              <div class="select-chips-row" id="texture-chips">
+                <button class="chip-btn active" data-finish="smooth"><i class="fa-solid fa-circle"></i> Smooth Silk</button>
+                <button class="chip-btn" data-finish="ribbed"><i class="fa-solid fa-bars"></i> Horizontal Ribs</button>
+                <button class="chip-btn" data-finish="lambeth"><i class="fa-solid fa-wave-square"></i> Vintage Ruffles</button>
+                <button class="chip-btn" data-finish="semi-naked"><i class="fa-solid fa-circle-notch"></i> Semi-Naked</button>
+              </div>
+            </div>
+
+            <!-- 4. Accents & Adornments -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>Artisan Accents &amp; Toppers</span>
+              </label>
+              <div class="decorations-toggles">
+                <label class="toggle-switch-card">
+                  <input type="checkbox" id="toggle-flowers" checked>
+                  <div class="toggle-body">
+                    <div class="toggle-icon"><i class="fa-solid fa-flower"></i></div>
+                    <div class="toggle-info">
+                      <span class="toggle-title">Fresh Sugar Botanicals</span>
+                      <span class="toggle-sub">Peonies, garden roses &amp; eucalyptus</span>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="toggle-switch-card">
+                  <input type="checkbox" id="toggle-goldleaf" checked>
+                  <div class="toggle-body">
+                    <div class="toggle-icon"><i class="fa-solid fa-sparkles"></i></div>
+                    <div class="toggle-info">
+                      <span class="toggle-title">24K Gold Leaf Accents</span>
+                      <span class="toggle-sub">Hand-pressed gold flake cascade</span>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="toggle-switch-card">
+                  <input type="checkbox" id="toggle-pearls">
+                  <div class="toggle-body">
+                    <div class="toggle-icon"><i class="fa-regular fa-gem"></i></div>
+                    <div class="toggle-info">
+                      <span class="toggle-title">Royal Sugar Pearls</span>
+                      <span class="toggle-sub">Delicate tier border beading</span>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="toggle-switch-card">
+                  <input type="checkbox" id="toggle-custom-topper">
+                  <div class="toggle-body">
+                    <div class="toggle-icon"><i class="fa-solid fa-font"></i></div>
+                    <div class="toggle-info">
+                      <span class="toggle-title">Custom Acrylic Monogram</span>
+                      <span class="toggle-sub">Laser-cut calligraphy topper</span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Inscription input when topper enabled -->
+              <div class="topper-text-input-wrap" id="topper-input-container" style="display: none;">
+                <label for="topper-text" class="input-mini-label">Topper Custom Text:</label>
+                <input type="text" id="topper-text" class="form-input-sm" value="Forever &amp; Always" maxlength="28">
+              </div>
+            </div>
+
+            <!-- Alternative Curated Recommendations Dropdown -->
+            <div class="control-group">
+              <label class="control-label">
+                <span>Explore Other Recommendation Styles</span>
+              </label>
+              <div class="mini-rec-cards-list" id="mini-recs-list">
+                <!-- Dynamically populated alt designs -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation to Next Stage -->
+      <div class="stage-nav-bar">
+        <button type="button" class="btn btn-outline" onclick="CakeApp.goToStage(1)">
+          <i class="fa-solid fa-arrow-left"></i> Back to Questionnaire
+        </button>
+        <button type="button" class="btn btn-primary-gold btn-lg" onclick="CakeApp.goToStage(3)">
+          Inspect Baker's Technical Specs <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- STAGE 3: BAKER'S NOTES & STRUCTURAL SPECS -->
+    <section id="stage-3" class="stage-section">
+      <div class="section-intro">
+        <span class="badge-pill">Step 3 of 5 &bull; Professional Engineering &amp; Recipes</span>
+        <h2 class="section-title">Master Baker's Technical Notes</h2>
+        <p class="section-desc">Tiered cakes are architectural structures as much as culinary delights. Below is your professional engineering blueprint, dowel placement schematic, temperature thresholds, and portion cutting guide.</p>
+      </div>
+
+      <div class="bakers-notes-grid">
+        <!-- Card 1: Structural Doweling & Stacking -->
+        <div class="baker-card">
+          <div class="baker-card-header">
+            <div class="icon-orb"><i class="fa-solid fa-diagram-project"></i></div>
+            <div>
+              <h3 class="baker-card-title">Structural Internal Support Blueprint</h3>
+              <span class="baker-card-subtitle">Calculated for <span id="baker-tier-count">2 Tiers</span> (&sim;12.5 lbs total weight)</span>
+            </div>
+          </div>
+          <div class="baker-card-body">
+            <div class="structural-blueprint-visual">
+              <svg viewBox="0 0 400 240" class="blueprint-svg" id="blueprint-svg">
+                <!-- Rendered dynamically in app.js -->
+              </svg>
+            </div>
+            
+            <div class="specs-bullet-list">
+              <div class="spec-item">
+                <i class="fa-solid fa-check-double text-gold"></i>
+                <div>
+                  <strong>Central Food-Grade Stability Rod:</strong>
+                  <p id="baker-central-rod-note">One 1/2" food-safe wooden dowel driven through all tiers directly into the 1/2" thick masonry bottom cake drum to eliminate transit shear stress.</p>
+                </div>
+              </div>
+              <div class="spec-item">
+                <i class="fa-solid fa-circle-dot text-gold"></i>
+                <div>
+                  <strong>Internal Support Dowels:</strong>
+                  <p id="baker-dowels-note">5 food-safe polypropylene perimeter dowels inserted in an equidistant circle in the 8" base tier, cut flush to support the upper 6" tier board.</p>
+                </div>
+              </div>
+              <div class="spec-item">
+                <i class="fa-solid fa-layer-group text-gold"></i>
+                <div>
+                  <strong>Cake Board Separation:</strong>
+                  <p>Each individual tier is assembled on a greaseproof corrugated cardboard circle identical to its diameter, bonded with a thin swipe of buttercream.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Climate, Melting Points & Refrigeration -->
+        <div class="baker-card">
+          <div class="baker-card-header">
+            <div class="icon-orb"><i class="fa-solid fa-temperature-half"></i></div>
+            <div>
+              <h3 class="baker-card-title">Temperature &amp; Chemistry Thresholds</h3>
+              <span class="baker-card-subtitle">Critical melting and stabilization guidelines</span>
+            </div>
+          </div>
+          <div class="baker-card-body">
+            <div class="temp-gauges-row">
+              <div class="temp-badge-box safe">
+                <span class="temp-label">Optimal Serving Temp</span>
+                <span class="temp-value">18°C - 20°C (65°F - 68°F)</span>
+                <span class="temp-desc">Allows butter in crumb and filling to reach creamy softness</span>
+              </div>
+              <div class="temp-badge-box warn">
+                <span class="temp-label">Melting Danger Zone</span>
+                <span class="temp-value">&gt; 23°C (73°F+)</span>
+                <span class="temp-desc">Swiss meringue buttercream begins softening; tier slump risk</span>
+              </div>
+            </div>
+
+            <div class="timeline-step-list">
+              <div class="timeline-point">
+                <div class="tl-bullet">1</div>
+                <div class="tl-content">
+                  <strong>24 Hours Prior: Deep Chill Stabilization</strong>
+                  <p>Cake must be chilled at 3°C - 5°C (38°F) for at least 6 hours post-assembly so butter fats solidify like concrete before transport.</p>
+                </div>
+              </div>
+              <div class="timeline-point">
+                <div class="tl-bullet">2</div>
+                <div class="tl-content">
+                  <strong>Delivery Vehicle: High A/C Climate Control</strong>
+                  <p>Transport vehicle interior should be pre-cooled to 16°C (60°F). NEVER transport a cold cake in a warm car trunk.</p>
+                </div>
+              </div>
+              <div class="timeline-point">
+                <div class="tl-bullet">3</div>
+                <div class="tl-content">
+                  <strong>At Venue: Tempering Protocol</strong>
+                  <p>Remove from refrigerator 2 hours before ceremonial slicing. Slicing a rock-hard cold cake ruins texture and tears delicate fillings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Interactive Portion Cutting Guide -->
+        <div class="baker-card full-width">
+          <div class="baker-card-header">
+            <div class="icon-orb"><i class="fa-solid fa-knife-kitchen"></i></div>
+            <div class="header-with-action">
+              <div>
+                <h3 class="baker-card-title">Interactive Portion Cutting Guide</h3>
+                <span class="baker-card-subtitle">Maximize your serving yield and prevent portion crumble</span>
+              </div>
+              <div class="portion-toggle-group">
+                <button class="portion-tab active" id="btn-wedding-cut" onclick="CakeApp.setCuttingMode('wedding')">
+                  Wedding Style (1" &times; 2" &bull; 80+ Servings)
+                </button>
+                <button class="portion-tab" id="btn-party-cut" onclick="CakeApp.setCuttingMode('party')">
+                  Party Style (1.5" &times; 2" &bull; 55+ Servings)
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="baker-card-body split-columns">
+            <div class="cutting-diagram-container">
+              <svg viewBox="0 0 320 240" class="cut-svg" id="cutting-guide-svg">
+                <!-- SVG dynamically drawn -->
+              </svg>
+              <div class="diagram-caption" id="cut-diagram-caption">
+                <strong>Concentric Catering Cut Method:</strong> Cut a 2-inch circle from the perimeter, slice along the ring into 1-inch pieces, then slice inner cylinder.
+              </div>
+            </div>
+
+            <div class="cutting-tips-column">
+              <h4>Pro Caterer Slicing Instructions:</h4>
+              <ul class="caterer-checklist">
+                <li><i class="fa-solid fa-check text-gold"></i> <strong>Clean Hot Blade:</strong> Dip a long serrated chef knife into a pitcher of boiling hot water and wipe clean between every cut.</li>
+                <li><i class="fa-solid fa-check text-gold"></i> <strong>Remove Upper Tiers First:</strong> Always unstack tiers onto clean cutting boards using an offset spatula before cutting the bottom tier.</li>
+                <li><i class="fa-solid fa-check text-gold"></i> <strong>Extract Support Dowels:</strong> Remove and count all poly dowels before distributing slices to guests for child and elder safety.</li>
+                <li><i class="fa-solid fa-check text-gold"></i> <strong>Top Tier Keepsake:</strong> If preserving the top tier for the 1st Anniversary, wrap securely in 3 layers of food-grade cling film and freeze in an airtight box.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation to Next Stage -->
+      <div class="stage-nav-bar">
+        <button type="button" class="btn btn-outline" onclick="CakeApp.goToStage(2)">
+          <i class="fa-solid fa-arrow-left"></i> Back to Visualizer
+        </button>
+        <button type="button" class="btn btn-primary-gold btn-lg" onclick="CakeApp.goToStage(4)">
+          Review Important Considerations <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- STAGE 4: IMPORTANT CONSIDERATIONS & SAFETY -->
+    <section id="stage-4" class="stage-section">
+      <div class="section-intro">
+        <span class="badge-pill">Step 4 of 5 &bull; Logistics, Safety &amp; Event Readiness</span>
+        <h2 class="section-title">Important Considerations</h2>
+        <p class="section-desc">Event day success depends on thoughtful logistics. Review these critical safety checkpoints for transportation, venue climate, and allergen isolation.</p>
+      </div>
+
+      <div class="considerations-grid">
+        <!-- Consideration 1: Vehicle & Transport -->
+        <div class="consideration-card">
+          <div class="cons-icon red"><i class="fa-solid fa-car-side"></i></div>
+          <h3 class="cons-title">Transport &amp; Vehicle Placement</h3>
+          <p class="cons-lead">Vehicle passenger seats have a 10° to 15° slant that causes irreversible tier shearing under brake momentum.</p>
+          <ul class="cons-list">
+            <li><strong>Flat Surface Only:</strong> Place cake box on a non-slip silicone mat on the flat boot/trunk floor or front passenger floorboard.</li>
+            <li><strong>Temperature Lockdown:</strong> Turn vehicle Air Conditioning to maximum 15 minutes prior to placing the cake inside.</li>
+            <li><strong>Gentle Cornering:</strong> Avoid sudden braking or hard turns; centrifugal force can destabilize taller tiers.</li>
+          </ul>
+        </div>
+
+        <!-- Consideration 2: Outdoor Weather & Sunlight -->
+        <div class="consideration-card">
+          <div class="cons-icon yellow"><i class="fa-solid fa-sun"></i></div>
+          <h3 class="cons-title">Sunlight &amp; Outdoor Elements</h3>
+          <p class="cons-lead">Direct sun rays passing through glass windows or open outdoor tents act like a greenhouse on buttercream.</p>
+          <ul class="cons-list">
+            <li><strong>Zero Direct Sun:</strong> Cake table must be situated fully in deep shade, far away from afternoon sun trajectories.</li>
+            <li><strong>Wind &amp; Flying Debris:</strong> Sugar florals and gold foil are fragile; ensure shelter from outdoor coastal gusts.</li>
+            <li><strong>Maximum Display Duration:</strong> In warm conditions (>22°C/72°F), limit display to 60-90 minutes before cutting.</li>
+          </ul>
+        </div>
+
+        <!-- Consideration 3: Allergen & Dietary Separation -->
+        <div class="consideration-card">
+          <div class="cons-icon green"><i class="fa-solid fa-shield-virus"></i></div>
+          <h3 class="cons-title">Allergens &amp; Dietary Protocol</h3>
+          <p class="cons-lead">Severe anaphylactic allergies (peanuts, tree nuts, celiac gluten) require uncompromising protocols.</p>
+          <ul class="cons-list">
+            <li><strong>Cross-Contamination Disclaimer:</strong> Unless prepared in a 100% certified facility, trace flour airborne particles can exist.</li>
+            <li><strong>Companion Kitchen Cupcakes:</strong> For high-risk allergy guests, we recommend individual boxed allergy-safe gourmet cupcakes.</li>
+            <li><strong>Clear Guest Signage:</strong> Place a tent card displaying allergens right beside the cake display table.</li>
+          </ul>
+        </div>
+
+        <!-- Consideration 4: Lead Times & Booking Milestones -->
+        <div class="consideration-card">
+          <div class="cons-icon blue"><i class="fa-solid fa-calendar-check"></i></div>
+          <h3 class="cons-title">Booking Timeline &amp; Lock-in</h3>
+          <p class="cons-lead">Handcrafted sugar flowers and custom acrylic toppers require weeks of artisan curing time.</p>
+          <ul class="cons-list">
+            <li><strong>Weddings &amp; Galas:</strong> Book 3 to 6 months in advance. Dates during peak spring/autumn fill quickly.</li>
+            <li><strong>Final Guest Count Lock:</strong> Tier sizes and final design adjustments must be finalized 21 days prior to event date.</li>
+            <li><strong>Tasting Box Delivery:</strong> Scheduled 8-12 weeks before event so flavors can be thoroughly savored.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Checklist for Event Day -->
+      <div class="event-checklist-pod">
+        <div class="pod-header">
+          <div>
+            <h3><i class="fa-solid fa-list-check text-gold"></i> Venue Coordination Pre-Flight Checklist</h3>
+            <p>Interactive verification for the wedding planner, host, or venue coordinator:</p>
+          </div>
+          <span class="checklist-status" id="checklist-counter">0 of 5 Verified</span>
+        </div>
+        <div class="checklist-items-grid">
+          <label class="check-item">
+            <input type="checkbox" class="interactive-check" onchange="CakeApp.updateChecklist()">
+            <span>Cake display table is level, heavy-duty, and located far from dance floors or heavy foot traffic.</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="interactive-check" onchange="CakeApp.updateChecklist()">
+            <span>Air conditioning at the venue is confirmed active and set to 19°C-21°C.</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="interactive-check" onchange="CakeApp.updateChecklist()">
+            <span>Cake knife, server spatula, small plates, and napkins are pre-staged near the display.</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="interactive-check" onchange="CakeApp.updateChecklist()">
+            <span>Venue refrigeration space is measured and cleared if early morning delivery is requested.</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="interactive-check" onchange="CakeApp.updateChecklist()">
+            <span>A dedicated server is designated to count and safely remove internal dowel supports before plating.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Navigation to Next Stage -->
+      <div class="stage-nav-bar">
+        <button type="button" class="btn btn-outline" onclick="CakeApp.goToStage(3)">
+          <i class="fa-solid fa-arrow-left"></i> Back to Baker's Specs
+        </button>
+        <button type="button" class="btn btn-primary-gold btn-lg" onclick="CakeApp.goToStage(5)">
+          Finalize &amp; Generate Blueprint <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- STAGE 5: CONSULTATION BLUEPRINT & EXPORT LINK -->
+    <section id="stage-5" class="stage-section">
+      <div class="section-intro">
+        <span class="badge-pill">Step 5 of 5 &bull; Comprehensive Project Specification</span>
+        <h2 class="section-title">Cake Design Consultation Blueprint</h2>
+        <p class="section-desc">Your custom artisan cake configuration is complete! You can download this official specification sheet, print it for your baker or venue, or share the direct link below.</p>
+      </div>
+
+      <!-- Spec Sheet Card (Printable Layout) -->
+      <div class="spec-sheet-container" id="printable-spec-sheet">
+        <!-- Blueprint Header -->
+        <div class="blueprint-doc-header">
+          <div class="bprint-brand">
+            <div class="bprint-logo"><i class="fa-solid fa-cake-candles"></i> Velvet &amp; Whisk</div>
+            <span class="bprint-sub">Artisan Haute Pâtisserie &amp; Cake Design</span>
+          </div>
+          <div class="bprint-meta">
+            <div class="doc-id">ORDER SPEC: <span id="blueprint-order-id">#VW-2026-8842</span></div>
+            <div class="doc-date" id="blueprint-date">Generated September 10, 2026</div>
+          </div>
+        </div>
+
+        <div class="blueprint-divider"></div>
+
+        <!-- 2-Column Summary: Left = Cake Details, Right = Visual Snapshot & Pricing -->
+        <div class="blueprint-body-grid">
+          <!-- Col 1 -->
+          <div class="bprint-col">
+            <div class="bprint-group">
+              <span class="bprint-label">Occasion &amp; Guest Count</span>
+              <h4 class="bprint-val" id="summary-occasion-val">Wedding &amp; Elopement &bull; 65 Guests</h4>
+            </div>
+
+            <div class="bprint-group">
+              <span class="bprint-label">Design Aesthetic &amp; Theme</span>
+              <h4 class="bprint-val" id="summary-aesthetic-val">Botanical &amp; Fresh Flora</h4>
+              <p class="bprint-subtext" id="summary-aesthetic-desc">Cascading sugar flowers, warm vanilla ivory silk buttercream with gold leaf foil.</p>
+            </div>
+
+            <div class="bprint-group">
+              <span class="bprint-label">Tier Configuration &amp; Sizing</span>
+              <div class="tiers-breakdown-table" id="summary-tiers-table">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <div class="bprint-group">
+              <span class="bprint-label">Flavor Profile &amp; Fillings</span>
+              <h4 class="bprint-val" id="summary-flavor-val">Tahitian Vanilla Bean &amp; Champagne Berry</h4>
+              <p class="bprint-subtext">Madagascar vanilla sponge, strawberry-prosecco reduction, Swiss meringue buttercream.</p>
+            </div>
+
+            <div class="bprint-group">
+              <span class="bprint-label">Dietary Safety Declarations</span>
+              <div class="dietary-tags-mini" id="summary-dietary-tags">
+                <span class="diet-tag">Nut-Free Kitchen Protocol</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2 -->
+          <div class="bprint-col">
+            <!-- Mini Cake Graphic Preview inside Blueprint -->
+            <div class="blueprint-cake-preview-box">
+              <div class="preview-mini-canvas" id="blueprint-mini-visual">
+                <!-- Simplified SVG rendered here -->
+              </div>
+              <div class="preview-palette-dots">
+                <span class="pal-dot" id="pal-dot-color" title="Icing Color"></span>
+                <span class="pal-accent" id="pal-accent-notes">Warm Vanilla &bull; 24K Gold Leaf</span>
+              </div>
+            </div>
+
+            <!-- Itemized Pricing Breakdown -->
+            <div class="bprint-group">
+              <span class="bprint-label">Itemized Price Estimation</span>
+              <div class="pricing-table">
+                <div class="price-row">
+                  <span id="price-tier-desc">2-Tier Handcrafted Sponge &amp; Swiss Buttercream</span>
+                  <strong id="price-tier-amt">$360.00</strong>
+                </div>
+                <div class="price-row">
+                  <span id="price-decor-desc">Sugar Botanicals &amp; Gold Leaf Cascade</span>
+                  <strong id="price-decor-amt">$75.00</strong>
+                </div>
+                <div class="price-row">
+                  <span>Reinforced Food-Safe Doweling &amp; Base Drum</span>
+                  <strong>$25.00</strong>
+                </div>
+                <div class="price-divider"></div>
+                <div class="price-row total">
+                  <span>Estimated Total (Excl. Venue Delivery):</span>
+                  <span class="total-badge" id="price-total-amt">$460.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Baker's Sign-off Box -->
+            <div class="baker-signoff-box">
+              <div class="sign-line">
+                <span class="line-label">Master Baker Approval</span>
+                <span class="signature-font">Chef Julianne Laurent</span>
+              </div>
+              <div class="sign-line">
+                <span class="line-label">Client Approval Signature</span>
+                <span class="signature-placeholder">_________________________</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Notes on Print -->
+        <div class="bprint-footer">
+          <span>Velvet &amp; Whisk Artisan Studio &bull; 142 Atelier Boulevard &bull; www.velvetandwhisk.com</span>
+          <span>Lead time 21 days &bull; Deposit required upon booking date confirmation</span>
+        </div>
+      </div>
+
+      <!-- Action Panel & Sharable Link -->
+      <div class="blueprint-actions-panel">
+        <div class="direct-link-box">
+          <div class="link-label">
+            <i class="fa-solid fa-link text-gold"></i>
+            <strong>Direct Web Page Link / Shareable URL:</strong>
+          </div>
+          <div class="link-input-row">
+            <input type="text" id="shareable-url-input" class="link-input" readonly value="file:///c:/Users/hp/Desktop/HTML/cake-studio/index.html">
+            <button class="btn btn-gold" id="copy-link-btn" onclick="CakeApp.copyShareLink()">
+              <i class="fa-solid fa-copy"></i> Copy Link
+            </button>
+            <a href="index.html" id="open-new-tab-btn" target="_blank" class="btn btn-outline">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in New Tab
+            </a>
+          </div>
+          <p class="link-hint">Anyone with this link can view and interact with your custom design directly in their web browser.</p>
+        </div>
+
+        <div class="blueprint-btn-row">
+          <button type="button" class="btn btn-outline" onclick="CakeApp.goToStage(4)">
+            <i class="fa-solid fa-arrow-left"></i> Edit Considerations
+          </button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print / Save as PDF Blueprint
+          </button>
+          <button type="button" class="btn btn-primary-gold" onclick="CakeApp.openInquiryModal()">
+            <i class="fa-solid fa-paper-plane"></i> Submit Baker Consultation Inquiry
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Inspiration Presets Modal -->
+  <div class="modal-overlay" id="presets-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-sparkles text-gold"></i> Curated Design Presets</h3>
+        <button class="modal-close-btn" onclick="CakeApp.closeModal('presets-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">Select an iconic studio creation to instantly populate all questionnaire answers and visual elements:</p>
+        <div class="preset-cards-list">
+          <div class="preset-row" onclick="CakeApp.applyPreset('royal-wedding')">
+            <div class="preset-img-thumb"><i class="fa-solid fa-crown"></i></div>
+            <div class="preset-details">
+              <strong>The Royal Windsor Wedding (3 Tiers &bull; 110 Guests)</strong>
+              <p>Botanical sugar florals, Tahitian vanilla champagne, 24K gold foil, Ivory silk finish.</p>
+            </div>
+            <button class="btn btn-sm btn-gold">Load Preset</button>
+          </div>
+
+          <div class="preset-row" onclick="CakeApp.applyPreset('vintage-lambeth')">
+            <div class="preset-img-thumb"><i class="fa-solid fa-cake-candles"></i></div>
+            <div class="preset-details">
+              <strong>The Marie Antoinette Lambeth (2 Tiers &bull; 50 Guests)</strong>
+              <p>Intricate Victorian royal piping, Blush rose hue, Earl Grey lavender with lemon curd.</p>
+            </div>
+            <button class="btn btn-sm btn-gold">Load Preset</button>
+          </div>
+
+          <div class="preset-row" onclick="CakeApp.applyPreset('modern-noir')">
+            <div class="preset-img-thumb"><i class="fa-solid fa-building-columns"></i></div>
+            <div class="preset-details">
+              <strong>The Metropolitan Gala Noir (3 Tiers &bull; 90 Guests)</strong>
+              <p>Sharp geometric lines, Midnight navy ganache, Callebaut chocolate &amp; smoked caramel.</p>
+            </div>
+            <button class="btn btn-sm btn-gold">Load Preset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inquiry Simulation Modal -->
+  <div class="modal-overlay" id="inquiry-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-paper-plane text-gold"></i> Submit Baker Consultation Inquiry</h3>
+        <button class="modal-close-btn" onclick="CakeApp.closeModal('inquiry-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="inquiry-form-wrap">
+          <p class="modal-desc">Send your design blueprint #<span id="modal-order-id">VW-2026</span> directly to Chef Julianne and our artisan team for date availability verification.</p>
+          <div class="form-group-modal">
+            <label>Your Full Name</label>
+            <input type="text" id="client-name" class="modal-input" placeholder="e.g. Sophia Montgomery" value="Sophia Montgomery">
+          </div>
+          <div class="form-group-modal">
+            <label>Email Address</label>
+            <input type="email" id="client-email" class="modal-input" placeholder="sophia@example.com" value="sophia@example.com">
+          </div>
+          <div class="form-group-modal">
+            <label>Event Date &amp; Venue Location</label>
+            <input type="text" id="client-event-info" class="modal-input" placeholder="e.g. October 24, 2026 - Rosewood Estate" value="October 24, 2026 - Rosewood Estate">
+          </div>
+          <div class="form-group-modal">
+            <label>Special Requests / Baker Notes</label>
+            <textarea id="client-notes" class="modal-textarea" rows="3" placeholder="Any specific flower species or delivery access codes..."></textarea>
+          </div>
+          <button class="btn btn-primary-gold btn-block btn-lg" onclick="CakeApp.submitInquiry()">
+            Confirm &amp; Transmit Design Brief <i class="fa-solid fa-check"></i>
+          </button>
+        </div>
+
+        <div id="inquiry-success-wrap" style="display: none; text-align: center; padding: 24px 10px;">
+          <div class="success-icon-badge"><i class="fa-solid fa-circle-check"></i></div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 26px; margin: 12px 0;">Consultation Brief Transmitted!</h3>
+          <p style="color: #666; font-size: 15px; line-height: 1.6; max-width: 440px; margin: 0 auto 20px;">
+            A confirmation receipt and downloadable PDF blueprint have been logged under reference <strong id="success-ref-code" style="color: #C5A059;">#VW-2026-8842</strong>. Our design concierge will contact you within 24 business hours.
+          </p>
+          <button class="btn btn-gold" onclick="CakeApp.closeModal('inquiry-modal')">Return to Studio</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-msg" class="toast-notification">
+    <i class="fa-solid fa-check-circle"></i> <span id="toast-text">Link copied to clipboard!</span>
+  </div>
+
+  <!-- Studio JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
